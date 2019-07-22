@@ -10,6 +10,7 @@ typedef struct {
 	HANDLE	hTread;
 	HANDLE	hPipe;
 	HANDLE	hEvent;
+	HANDLE  guiObject;
 } PIPE_INSTRUCT;
 
 
@@ -18,6 +19,7 @@ class QTGUI_Test : public QMainWindow
 	Q_OBJECT
 
 public:
+	static QTGUI_Test & getInstance();
 	QTGUI_Test(QWidget *parent = Q_NULLPTR);
 
 	int  nResValue;
@@ -31,7 +33,8 @@ public:
 
 private:
 	Ui::QTGUI_TestClass ui;
-	//DWORD WINAPI ServerThread(LPVOID lpParameter);
+	static QTGUI_Test *plog_;
+	//DWORD ServerThread(LPVOID lpParameter);
 
 signals:
 	//数据发生改变之后发送此信号

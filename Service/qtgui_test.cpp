@@ -5,6 +5,17 @@
 
 //QTGUI_Test* pMyDlg;
 
+QTGUI_Test* QTGUI_Test::plog_ = NULL;
+QTGUI_Test & QTGUI_Test::getInstance()
+{
+	if (plog_ == NULL)
+	{
+		plog_ = new QTGUI_Test;
+	}
+	return *plog_;
+}
+
+
 QTGUI_Test::QTGUI_Test(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -36,8 +47,8 @@ DWORD WINAPI ServerThread(LPVOID lpParameter)
 		int a, b;
 		sscanf(szBuf, "%d %d", &a, &b);
 
-		//QTGUI_Test* pMyDlg;
-		//emit pMyDlg->onDataChanged(a,b);
+		QTGUI_Test &pMyDlg = *(QTGUI_Test*)CurPipeInst.guiObject;
+		emit pMyDlg.onDataChanged(a,b);
 		memset(szBuf, 0, sizeof(szBuf));
 		// 把反馈信息写入管道
 		WriteFile(CurPipeInst.hPipe, szBuf, strlen(szBuf), &nWriteByte, NULL);
@@ -49,7 +60,7 @@ DWORD WINAPI ServerThread(LPVOID lpParameter)
 
 void QTGUI_Test::on_start_button_clicked()
 {
-	//onDataChanged(1,2);
+	//onDataChanged(2,4);
 
 	LPCWSTR lpPipeName = L"\\\\.\\Pipe\\NamedPipe";
 	unsigned long lpThreadId;
@@ -67,6 +78,7 @@ void QTGUI_Test::on_start_button_clicked()
 		}
 		// 为每个管道实例创建一个事件对象，用于实现重叠IO
 		PipeInst[i].hEvent = CreateEvent(NULL, false, false, false);
+		PipeInst[i].guiObject = &QTGUI_Test::getInstance();
 		// 为每个管道实例分配一个线程，用于响应客户端的请求
 		PipeInst[i].hTread = CreateThread(NULL,0,ServerThread, &PipeInst[i], 0,	&lpThreadId);
 	}
@@ -94,4 +106,10 @@ void  QTGUI_Test::updateUi(int a, int b)
 	ui.a_text->setText(QString::number(a));
 	ui.b_text->setText(QString::number(b));
 	ui.c_text->setText(QString::number(a + b));
+
+	ui.a_text->repaint();
+	ui.b_text->repaint();
+	ui.c_text->repaint();
+
+
 }
