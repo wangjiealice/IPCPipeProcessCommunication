@@ -40,6 +40,7 @@ public:
     QLabel *label_4;
     QLineEdit *c_text_2;
     QPushButton *stop_button;
+    QPushButton *start_receive_image_button;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -48,12 +49,12 @@ public:
     {
         if (QTGUI_TestClass->objectName().isEmpty())
             QTGUI_TestClass->setObjectName(QStringLiteral("QTGUI_TestClass"));
-        QTGUI_TestClass->resize(449, 476);
+        QTGUI_TestClass->resize(449, 517);
         centralWidget = new QWidget(QTGUI_TestClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         start_button = new QPushButton(centralWidget);
         start_button->setObjectName(QStringLiteral("start_button"));
-        start_button->setGeometry(QRect(60, 350, 120, 40));
+        start_button->setGeometry(QRect(50, 350, 120, 40));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(20, 10, 381, 121));
@@ -89,13 +90,17 @@ public:
         c_text_2->setGeometry(QRect(70, 30, 221, 31));
         stop_button = new QPushButton(centralWidget);
         stop_button->setObjectName(QStringLiteral("stop_button"));
-        stop_button->setGeometry(QRect(220, 350, 120, 40));
+        stop_button->setGeometry(QRect(230, 350, 120, 40));
+        start_receive_image_button = new QPushButton(centralWidget);
+        start_receive_image_button->setObjectName(QStringLiteral("start_receive_image_button"));
+        start_receive_image_button->setGeometry(QRect(50, 400, 191, 40));
         QTGUI_TestClass->setCentralWidget(centralWidget);
         groupBox->raise();
         start_button->raise();
         groupBox_2->raise();
         groupBox_3->raise();
         stop_button->raise();
+        start_receive_image_button->raise();
         menuBar = new QMenuBar(QTGUI_TestClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 449, 26));
@@ -126,6 +131,7 @@ public:
         label_4->setText(QApplication::translate("QTGUI_TestClass", "M\357\274\232", nullptr));
         c_text_2->setText(QApplication::translate("QTGUI_TestClass", "4", nullptr));
         stop_button->setText(QApplication::translate("QTGUI_TestClass", "\345\201\234\346\255\242\346\234\215\345\212\241\345\231\250", nullptr));
+        start_receive_image_button->setText(QApplication::translate("QTGUI_TestClass", "\345\220\257\345\212\250\350\216\267\345\217\226\345\233\276\345\203\217\346\234\215\345\212\241\345\231\250", nullptr));
     } // retranslateUi
 
 };

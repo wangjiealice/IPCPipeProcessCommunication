@@ -42,6 +42,7 @@ signals:
 
 private slots:
 	void on_start_button_clicked();
+	void on_start_receive_image_button_clicked();
 	void on_stop_button_clicked();
 	void updateUi(int a, int b);
 

@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-
+#include "ImageProcessing.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +16,7 @@ using namespace std;
 
 constexpr auto SEND_BUFF_SIZE = 1024;
 inline void winerr(void);		//用于打印windows错误代码
+unsigned char* yuvImageBuffer;
 
 void RunExe()
 {
@@ -189,7 +190,52 @@ void IPC_cmd()
 	TerminateProcess(pro_info.hProcess, 0);		//用于关闭cmd进程
 }
 
-void Submit()
+void SendLocalImageBackToApplication_208_4k(string files)
+{
+	int imageWidth = 3840;
+	int imageHeight = 2160;
+	ImageProcessing imageProcess;
+	unsigned long newImageBufsize = imageWidth * imageHeight;
+
+	yuvImageBuffer = (unsigned char *)malloc(newImageBufsize * 3 / 2);
+	memset(yuvImageBuffer, 0, newImageBufsize * 3 / 2);
+	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files, imageWidth, imageHeight, yuvImageBuffer, true);
+	if (!result)
+	{
+		printf("208 4k CreateImagebufferFromLocalYUVImage failed!");
+		return;
+	}
+}
+
+void SendLocalImageBackToApplication_202_1080p(vector<string> &files)
+{
+	int imageWidth = 1920;
+	int imageHeight = 1080;
+	ImageProcessing imageProcess;
+	int listImageCount = (int)files.size();
+	unsigned long newImageBufsize = imageWidth * imageHeight;
+
+	for (int i = 0; i <listImageCount; i++)
+	{
+		yuvImageBuffer = (unsigned char *)malloc(newImageBufsize);
+		memset(yuvImageBuffer, 0, newImageBufsize);
+		bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files[i], imageWidth, imageHeight, yuvImageBuffer, false);
+		if (!result)
+		{
+			printf("202 1080p CreateImagebufferFromLocalYUVImage failed!");
+			return;
+		}
+	}
+}
+
+
+void ReadYUVImageFileFromLocal()
+{
+	string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\208_4K_YUV\\0";
+	SendLocalImageBackToApplication_208_4k(fileName);
+}
+
+void SubmitImage(int nFirst,int nSecond)
 {
 	// 打开管道
 	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\NamedPipe", GENERIC_READ | GENERIC_WRITE, \
@@ -201,15 +247,36 @@ void Submit()
 	}
 
 	DWORD nReadByte, nWriteByte;
+	char szBuf[10] = { 0 };
+
+	int imageWidth = 3840;
+	int imageHeight = 2160;
+	unsigned long newImageBufsize = imageWidth * imageHeight * 1.5;
+	WriteFile(hPipe, yuvImageBuffer, newImageBufsize, &nWriteByte, NULL);
+
+	memset(szBuf, 0, sizeof(szBuf));
+	// 读取服务器的反馈信息
+	ReadFile(hPipe, szBuf, 6, &nReadByte, NULL);
+	// 把返回信息格式化为整数
+	int nResValue;
+	sscanf_s(szBuf, "%d", &nResValue);
+	cout << szBuf << endl;
+	CloseHandle(hPipe);
+}
+
+void Submit(int nFirst, int nSecond)
+{
+	// 打开管道
+	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\NamedPipe", GENERIC_READ | GENERIC_WRITE, \
+		0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hPipe == INVALID_HANDLE_VALUE)
+	{
+		MessageBox(0, L"打开管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+		return;
+	}
+
+	DWORD nReadByte, nWriteByte;
 	char szBuf[1024] = { 0 };
-	/*string nFirst;
-	getline(cin, nFirst);
-
-	string nSecond;
-	getline(cin, nSecond);*/
-
-	int nFirst = 1;
-	int nSecond = 2;
 
 	// 把两个整数(a,b)格式化为字符串
 	sprintf_s(szBuf, "%d %d", nFirst, nSecond);
@@ -222,13 +289,27 @@ void Submit()
 	// 把返回信息格式化为整数
 	int nResValue;
 	sscanf_s(szBuf, "%d", &nResValue);
-	//this->UpdateData(false);
+	printf("Get value from Server, and value is: ");
+	printf(szBuf);
+
 	CloseHandle(hPipe);
 }
 
+
+
 int main()
 {
-	Submit();
+	ReadYUVImageFileFromLocal();
+	Submit(2, 6);
+
+	int i;
+	cin >> i;
+
+	//for(int i = 0; i < 1000; i++)
+	//{
+		//Sleep(1000);
+
+	//}
 	/*for(int i = 0; i < 100; i++)
 	{ 
 		printf("This is %d times. \n", i);

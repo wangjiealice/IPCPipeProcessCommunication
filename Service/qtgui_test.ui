@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>449</width>
-    <height>476</height>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="start_button">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>50</x>
       <y>350</y>
       <width>120</width>
       <height>40</height>
@@ -167,7 +167,7 @@
    <widget class="QPushButton" name="stop_button">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>230</x>
       <y>350</y>
       <width>120</width>
       <height>40</height>
@@ -177,11 +177,25 @@
      <string>停止服务器</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="start_receive_image_button">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>400</y>
+      <width>191</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>启动获取图像服务器</string>
+    </property>
+   </widget>
    <zorder>groupBox</zorder>
    <zorder>start_button</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>groupBox_3</zorder>
    <zorder>stop_button</zorder>
+   <zorder>start_receive_image_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
