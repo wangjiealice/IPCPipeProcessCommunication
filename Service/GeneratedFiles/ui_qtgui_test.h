@@ -129,7 +129,7 @@ public:
         c_text->setText(QString());
         groupBox_3->setTitle(QApplication::translate("QTGUI_TestClass", "\350\256\276\347\275\256\346\234\200\345\244\247\350\277\236\346\216\245\346\225\260", nullptr));
         label_4->setText(QApplication::translate("QTGUI_TestClass", "M\357\274\232", nullptr));
-        c_text_2->setText(QApplication::translate("QTGUI_TestClass", "4", nullptr));
+        c_text_2->setText(QApplication::translate("QTGUI_TestClass", "Not implement yet", nullptr));
         stop_button->setText(QApplication::translate("QTGUI_TestClass", "\345\201\234\346\255\242\346\234\215\345\212\241\345\231\250", nullptr));
         start_receive_image_button->setText(QApplication::translate("QTGUI_TestClass", "\345\220\257\345\212\250\350\216\267\345\217\226\345\233\276\345\203\217\346\234\215\345\212\241\345\231\250", nullptr));
     } // retranslateUi

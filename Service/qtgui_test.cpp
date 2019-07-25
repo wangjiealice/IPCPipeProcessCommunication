@@ -1,7 +1,20 @@
+// Similar with Axiocam20xTwain32
+
+#define isCamera208 true
+#define snapImageWidth 2160
+#define snapImageHeight 3840
+
+//#define isCamera208 false
+//#define snapImageWidth 1080
+//#define snapImageHeight 1920
+
 #include "qtgui_test.h"
 #include"global.h"
 
 #define MAX_BUFFER_SIZE 1024
+unsigned char *yuvImageBuffer;
+unsigned long yuvImageBufferSize = 0;
+int receiveMessageTime = 0;
 
 QTGUI_Test* QTGUI_Test::plog_ = NULL;
 QTGUI_Test & QTGUI_Test::getInstance()
@@ -13,11 +26,18 @@ QTGUI_Test & QTGUI_Test::getInstance()
 	return *plog_;
 }
 
-
 QTGUI_Test::QTGUI_Test(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	if (isCamera208)
+	{
+		yuvImageBufferSize = snapImageWidth * snapImageHeight * 3 / 2;
+	}
+	else
+	{
+		yuvImageBufferSize = snapImageWidth * snapImageHeight;
+	}
 	connect(this, SIGNAL(onDataChanged(int, int)), this, SLOT(updateUi(int,int)));
 }
 
@@ -48,62 +68,80 @@ DWORD WINAPI ServerThread(LPVOID lpParameter)
 		QTGUI_Test &pMyDlg = *(QTGUI_Test*)CurPipeInst.guiObject;
 		emit pMyDlg.onDataChanged(a,b);
 
-		sprintf_s(szBuf, "%d %d", 6, 6);
-
 		//memset(szBuf, 0, sizeof(szBuf));
 		// 把反馈信息写入管道
-		WriteFile(CurPipeInst.hPipe, szBuf, strlen(szBuf), &nWriteByte, NULL);
+		WriteFile(CurPipeInst.hPipe, "Succeed", 8, &nWriteByte, NULL);
 		DisconnectNamedPipe(CurPipeInst.hPipe);
+		printf("Already DisconnectNamedPipe.\n");
 	}
 
 	return 0;
 }
 
+void GreatStringFromCurrentTime(char* szBuf, int bufferSize)
+{
+	SYSTEMTIME sys;
+	GetLocalTime(&sys);
+	//char szBuf[100] = { 0 };
+	sprintf_s(szBuf, bufferSize,
+		"C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\SaveImage\\%d%d%d%d%d%d%d", 
+		sys.wYear, 
+		sys.wMonth,
+		sys.wDay, 
+		sys.wHour, 
+		sys.wMinute, 
+		sys.wSecond, 
+		sys.wMilliseconds);
+}
+
+void SaveYUVImage()
+{
+	char name[200] = {0};
+	GreatStringFromCurrentTime(name,sizeof(name));
+
+	FILE *fp;
+	fp = fopen(name, "wb+");
+	if (fp)
+	{
+		fwrite(yuvImageBuffer, 1, yuvImageBufferSize, fp);
+	}
+
+	fclose(fp);
+}
+
+
 DWORD WINAPI AcceptImageThread(LPVOID lpParameter)
 {
-	#define imageBufferSize 1000000
 	DWORD	nReadByte = 0, nWriteByte = 0, dwByte = 0;
-
-	int imageWidth = 3840;
-	int imageHeight = 2160;
-	unsigned long newImageBufsize = imageWidth * imageHeight;
-
-	unsigned char *yuvImageBuffer = (unsigned char *)malloc(newImageBufsize * 3 / 2);
-	memset(yuvImageBuffer, 0, newImageBufsize * 3 / 2);
-
+	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
+	memset(yuvImageBuffer, 0, yuvImageBufferSize);
 
 	PIPE_INSTRUCT CurPipeInst = *(PIPE_INSTRUCT*)lpParameter;
 	OVERLAPPED OverLapStruct = { 0, 0, 0, 0, CurPipeInst.hEvent };
 	while (true)
 	{
 
-		//memset(szBuf, 0, sizeof(szBuf));
 		ConnectNamedPipe(CurPipeInst.hPipe, &OverLapStruct);
 		WaitForSingleObject(CurPipeInst.hEvent, INFINITE);
 		if (!GetOverlappedResult(CurPipeInst.hPipe, &OverLapStruct, &dwByte, true))
 			break;
 
 		// 从管道中读取客户端的请求信息
-		if (!ReadFile(CurPipeInst.hPipe, yuvImageBuffer, newImageBufsize, &nReadByte, NULL))
+		if (!ReadFile(CurPipeInst.hPipe, yuvImageBuffer, yuvImageBufferSize, &nReadByte, NULL))
 		{
 			MessageBox(0, L"读取管道错误！", 0, 0);
 			break;
 		}
 		else
 		{
-			printf("Receive message from client.\n");
+			printf("Receive message from client %d times.\n", receiveMessageTime);
+			SaveYUVImage();
+			++receiveMessageTime;
 		}
 
-		// 把反馈信息写入管道
-		yuvImageBuffer[0] = 6;
-		yuvImageBuffer[1] = 6;
-		yuvImageBuffer[2] = 6;
-		yuvImageBuffer[3] = 6;
-		yuvImageBuffer[4] = 6;
-		yuvImageBuffer[5] = 6;
+		QTGUI_Test &pMyDlg = *(QTGUI_Test*)CurPipeInst.guiObject;
+		emit pMyDlg.onDataChanged(yuvImageBuffer[0], yuvImageBuffer[1]);
 
-		WriteFile(CurPipeInst.hPipe, yuvImageBuffer, 6, &nWriteByte, NULL);
-		printf("Already write to pipe and going to disconnect");
 		DisconnectNamedPipe(CurPipeInst.hPipe);
 		printf("Already DisconnectNamedPipe.\n");
 	}

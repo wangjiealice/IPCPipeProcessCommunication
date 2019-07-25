@@ -6,13 +6,20 @@
 
 #define MAX_CONNECT 128
 
-typedef struct {
+typedef struct
+{
 	HANDLE	hTread;
 	HANDLE	hPipe;
 	HANDLE	hEvent;
 	HANDLE  guiObject;
 } PIPE_INSTRUCT;
 
+typedef struct 
+{
+	unsigned char *	yuvImageBuffer;
+	unsigned long imageBuffersize;
+	bool isCameraType208;
+} CameraInfo;
 
 class QTGUI_Test : public QMainWindow
 {

@@ -1,5 +1,5 @@
 // Process_Test.cpp : Defines the entry point for the console application.
-//
+// Similar with AxiocamApplication
 
 #include "stdafx.h"
 #include "ImageProcessing.h"
@@ -13,10 +13,17 @@
 #include <tchar.h>
 
 using namespace std;
-
 constexpr auto SEND_BUFF_SIZE = 1024;
 inline void winerr(void);		//用于打印windows错误代码
-unsigned char* yuvImageBuffer;
+unsigned char* yuvImageBuffer = NULL;
+unsigned long yuvImageBufferSize = 0;
+
+#define isCamera208 true
+#define snapImageWidth 2160
+#define snapImageHeight 3840
+//#define isCamera208 false
+//#define snapImageWidth 1080
+//#define snapImageHeight 1920
 
 void RunExe()
 {
@@ -192,14 +199,10 @@ void IPC_cmd()
 
 void SendLocalImageBackToApplication_208_4k(string files)
 {
-	int imageWidth = 3840;
-	int imageHeight = 2160;
 	ImageProcessing imageProcess;
-	unsigned long newImageBufsize = imageWidth * imageHeight;
-
-	yuvImageBuffer = (unsigned char *)malloc(newImageBufsize * 3 / 2);
-	memset(yuvImageBuffer, 0, newImageBufsize * 3 / 2);
-	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files, imageWidth, imageHeight, yuvImageBuffer, true);
+	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
+	memset(yuvImageBuffer, 0, yuvImageBufferSize);
+	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files, snapImageWidth, snapImageHeight, yuvImageBuffer, true);
 	if (!result)
 	{
 		printf("208 4k CreateImagebufferFromLocalYUVImage failed!");
@@ -207,35 +210,34 @@ void SendLocalImageBackToApplication_208_4k(string files)
 	}
 }
 
-void SendLocalImageBackToApplication_202_1080p(vector<string> &files)
+void SendLocalImageBackToApplication_202_1080p(string file)
 {
-	int imageWidth = 1920;
-	int imageHeight = 1080;
 	ImageProcessing imageProcess;
-	int listImageCount = (int)files.size();
-	unsigned long newImageBufsize = imageWidth * imageHeight;
-
-	for (int i = 0; i <listImageCount; i++)
+	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
+	memset(yuvImageBuffer, 0, yuvImageBufferSize);
+	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(file, snapImageWidth, snapImageHeight, yuvImageBuffer, false);
+	if (!result)
 	{
-		yuvImageBuffer = (unsigned char *)malloc(newImageBufsize);
-		memset(yuvImageBuffer, 0, newImageBufsize);
-		bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files[i], imageWidth, imageHeight, yuvImageBuffer, false);
-		if (!result)
-		{
-			printf("202 1080p CreateImagebufferFromLocalYUVImage failed!");
-			return;
-		}
+		printf("202 1080p CreateImagebufferFromLocalYUVImage failed!");
+		return;
 	}
 }
 
-
 void ReadYUVImageFileFromLocal()
 {
-	string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\208_4K_YUV\\0";
-	SendLocalImageBackToApplication_208_4k(fileName);
+	if (isCamera208)
+	{
+		string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\208_4K_YUV\\0";
+		SendLocalImageBackToApplication_208_4k(fileName);
+	}
+	else
+	{
+		string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\202_1080p_YUV\\0";
+		SendLocalImageBackToApplication_202_1080p(fileName);
+	}
 }
 
-void SubmitImage(int nFirst,int nSecond)
+void SendImageToTWAIN()
 {
 	// 打开管道
 	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\NamedPipe", GENERIC_READ | GENERIC_WRITE, \
@@ -246,21 +248,9 @@ void SubmitImage(int nFirst,int nSecond)
 		return;
 	}
 
-	DWORD nReadByte, nWriteByte;
-	char szBuf[10] = { 0 };
+	DWORD nWriteByte;
+	WriteFile(hPipe, yuvImageBuffer, yuvImageBufferSize, &nWriteByte, NULL);
 
-	int imageWidth = 3840;
-	int imageHeight = 2160;
-	unsigned long newImageBufsize = imageWidth * imageHeight * 1.5;
-	WriteFile(hPipe, yuvImageBuffer, newImageBufsize, &nWriteByte, NULL);
-
-	memset(szBuf, 0, sizeof(szBuf));
-	// 读取服务器的反馈信息
-	ReadFile(hPipe, szBuf, 6, &nReadByte, NULL);
-	// 把返回信息格式化为整数
-	int nResValue;
-	sscanf_s(szBuf, "%d", &nResValue);
-	cout << szBuf << endl;
 	CloseHandle(hPipe);
 }
 
@@ -285,31 +275,44 @@ void Submit(int nFirst, int nSecond)
 
 	memset(szBuf, 0, sizeof(szBuf));
 	// 读取服务器的反馈信息
-	ReadFile(hPipe, szBuf, 1024, &nReadByte, NULL);
+	ReadFile(hPipe, szBuf, 8, &nReadByte, NULL);
 	// 把返回信息格式化为整数
 	int nResValue;
-	sscanf_s(szBuf, "%d", &nResValue);
+	//sscanf_s(szBuf, "%s", &nResValue);
 	printf("Get value from Server, and value is: ");
 	printf(szBuf);
 
 	CloseHandle(hPipe);
 }
 
+void Initialize()
+{
+	if (isCamera208)
+	{
+		yuvImageBufferSize = snapImageWidth * snapImageHeight * 3 / 2;
+	}
+	else
+	{
+		yuvImageBufferSize = snapImageWidth * snapImageHeight;
+	}
 
+	ReadYUVImageFileFromLocal();
+}
 
 int main()
 {
-	ReadYUVImageFileFromLocal();
-	Submit(2, 6);
+	Initialize();
+	for(int i = 0; i < 10; i++)
+	{
+		printf("This is %d times. \n", i);
+		Sleep(10);
+		SendImageToTWAIN();
+	}
 
 	int i;
 	cin >> i;
 
-	//for(int i = 0; i < 1000; i++)
-	//{
-		//Sleep(1000);
 
-	//}
 	/*for(int i = 0; i < 100; i++)
 	{ 
 		printf("This is %d times. \n", i);
