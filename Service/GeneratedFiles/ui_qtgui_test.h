@@ -41,6 +41,8 @@ public:
     QLineEdit *c_text_2;
     QPushButton *stop_button;
     QPushButton *start_receive_image_button;
+    QLabel *label_5;
+    QLabel *IsCamera208Text;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -49,12 +51,12 @@ public:
     {
         if (QTGUI_TestClass->objectName().isEmpty())
             QTGUI_TestClass->setObjectName(QStringLiteral("QTGUI_TestClass"));
-        QTGUI_TestClass->resize(449, 517);
+        QTGUI_TestClass->resize(449, 655);
         centralWidget = new QWidget(QTGUI_TestClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         start_button = new QPushButton(centralWidget);
         start_button->setObjectName(QStringLiteral("start_button"));
-        start_button->setGeometry(QRect(50, 350, 120, 40));
+        start_button->setGeometry(QRect(50, 410, 120, 40));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setGeometry(QRect(20, 10, 381, 121));
@@ -90,10 +92,16 @@ public:
         c_text_2->setGeometry(QRect(70, 30, 221, 31));
         stop_button = new QPushButton(centralWidget);
         stop_button->setObjectName(QStringLiteral("stop_button"));
-        stop_button->setGeometry(QRect(230, 350, 120, 40));
+        stop_button->setGeometry(QRect(230, 410, 120, 40));
         start_receive_image_button = new QPushButton(centralWidget);
         start_receive_image_button->setObjectName(QStringLiteral("start_receive_image_button"));
-        start_receive_image_button->setGeometry(QRect(50, 400, 191, 40));
+        start_receive_image_button->setGeometry(QRect(50, 460, 191, 40));
+        label_5 = new QLabel(centralWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(40, 350, 91, 21));
+        IsCamera208Text = new QLabel(centralWidget);
+        IsCamera208Text->setObjectName(QStringLiteral("IsCamera208Text"));
+        IsCamera208Text->setGeometry(QRect(140, 350, 91, 21));
         QTGUI_TestClass->setCentralWidget(centralWidget);
         groupBox->raise();
         start_button->raise();
@@ -101,6 +109,8 @@ public:
         groupBox_3->raise();
         stop_button->raise();
         start_receive_image_button->raise();
+        label_5->raise();
+        IsCamera208Text->raise();
         menuBar = new QMenuBar(QTGUI_TestClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 449, 26));
@@ -132,6 +142,8 @@ public:
         c_text_2->setText(QApplication::translate("QTGUI_TestClass", "Not implement yet", nullptr));
         stop_button->setText(QApplication::translate("QTGUI_TestClass", "\345\201\234\346\255\242\346\234\215\345\212\241\345\231\250", nullptr));
         start_receive_image_button->setText(QApplication::translate("QTGUI_TestClass", "\345\220\257\345\212\250\350\216\267\345\217\226\345\233\276\345\203\217\346\234\215\345\212\241\345\231\250", nullptr));
+        label_5->setText(QApplication::translate("QTGUI_TestClass", "Is camera208:", nullptr));
+        IsCamera208Text->setText(QApplication::translate("QTGUI_TestClass", "Not know", nullptr));
     } // retranslateUi
 
 };

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>449</width>
-    <height>517</height>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>350</y>
+      <y>410</y>
       <width>120</width>
       <height>40</height>
      </rect>
@@ -168,7 +168,7 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>350</y>
+      <y>410</y>
       <width>120</width>
       <height>40</height>
      </rect>
@@ -181,7 +181,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>400</y>
+      <y>460</y>
       <width>191</width>
       <height>40</height>
      </rect>
@@ -190,12 +190,40 @@
      <string>启动获取图像服务器</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>350</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Is camera208:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="IsCamera208Text">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>350</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Not know</string>
+    </property>
+   </widget>
    <zorder>groupBox</zorder>
    <zorder>start_button</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>groupBox_3</zorder>
    <zorder>stop_button</zorder>
    <zorder>start_receive_image_button</zorder>
+   <zorder>label_5</zorder>
+   <zorder>IsCamera208Text</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

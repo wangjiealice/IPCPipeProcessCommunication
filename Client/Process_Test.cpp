@@ -17,10 +17,12 @@ constexpr auto SEND_BUFF_SIZE = 1024;
 inline void winerr(void);		//用于打印windows错误代码
 unsigned char* yuvImageBuffer = NULL;
 unsigned long yuvImageBufferSize = 0;
+CameraInfo cameraInfo;
 
 #define isCamera208 true
 #define snapImageWidth 2160
 #define snapImageHeight 3840
+
 //#define isCamera208 false
 //#define snapImageWidth 1080
 //#define snapImageHeight 1920
@@ -41,7 +43,7 @@ void RunExe()
 	{
 		printf("Start CreateProcess \n");
 
-		bool bRet = ::CreateProcess(
+		BOOL bRet = ::CreateProcess(
 			szPath,
 			szCmd,
 			NULL,
@@ -235,29 +237,72 @@ void ReadYUVImageFileFromLocal()
 		string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\202_1080p_YUV\\0";
 		SendLocalImageBackToApplication_202_1080p(fileName);
 	}
+
+	cameraInfo.isCameraType208 = isCamera208;
 }
 
-void SendImageToTWAIN()
+bool SendImageToTWAIN()
 {
 	// 打开管道
-	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\NamedPipe", GENERIC_READ | GENERIC_WRITE, \
+	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\ImageInfo", GENERIC_READ | GENERIC_WRITE, \
 		0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hPipe == INVALID_HANDLE_VALUE)
 	{
-		MessageBox(0,L"打开管道失败，服务器尚未启动,或者客户端数量过多",0,0);
-		return;
+		return false;
 	}
 
 	DWORD nWriteByte;
 	WriteFile(hPipe, yuvImageBuffer, yuvImageBufferSize, &nWriteByte, NULL);
 
 	CloseHandle(hPipe);
+
+	return true;
+}
+
+bool SendCameraInfoToTWAIN()
+{
+	// 打开管道
+	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\CameraInfo", GENERIC_READ | GENERIC_WRITE, \
+		0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hPipe == INVALID_HANDLE_VALUE)
+	{
+		return false;
+	}
+
+	DWORD nWriteByte;
+	if (cameraInfo.isCameraType208)
+	{
+		cameraInfo.isCameraType208 = false;
+	}
+	else
+	{
+		cameraInfo.isCameraType208 = true;
+	}
+
+
+	WriteFile(hPipe, &cameraInfo, sizeof(cameraInfo), &nWriteByte, NULL);
+
+	CloseHandle(hPipe);
+	return true;
+}
+
+void SendAllInfoTWAIN()
+{
+	if (!SendImageToTWAIN())
+	{
+		MessageBox(0, L"打开ImageInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+		return;
+	}
+	if (!SendCameraInfoToTWAIN())
+	{
+		MessageBox(0, L"打开CameraInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+	}
 }
 
 void Submit(int nFirst, int nSecond)
 {
 	// 打开管道
-	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\NamedPipe", GENERIC_READ | GENERIC_WRITE, \
+	HANDLE hPipe = CreateFile(L"\\\\.\\Pipe\\ImageInfo", GENERIC_READ | GENERIC_WRITE, \
 		0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hPipe == INVALID_HANDLE_VALUE)
 	{
@@ -277,8 +322,6 @@ void Submit(int nFirst, int nSecond)
 	// 读取服务器的反馈信息
 	ReadFile(hPipe, szBuf, 8, &nReadByte, NULL);
 	// 把返回信息格式化为整数
-	int nResValue;
-	//sscanf_s(szBuf, "%s", &nResValue);
 	printf("Get value from Server, and value is: ");
 	printf(szBuf);
 
@@ -302,16 +345,16 @@ void Initialize()
 int main()
 {
 	Initialize();
+
 	for(int i = 0; i < 10; i++)
 	{
 		printf("This is %d times. \n", i);
-		Sleep(10);
-		SendImageToTWAIN();
+		SendAllInfoTWAIN();
+		Sleep(20);
 	}
 
 	int i;
 	cin >> i;
-
 
 	/*for(int i = 0; i < 100; i++)
 	{ 

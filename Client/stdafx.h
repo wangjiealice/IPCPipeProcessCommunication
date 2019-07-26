@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include <tchar.h>
 
-
+typedef struct
+{
+	bool isCameraType208;
+} CameraInfo;
 
 // TODO: reference additional headers your program requires here
