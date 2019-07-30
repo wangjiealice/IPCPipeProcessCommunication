@@ -1,20 +1,19 @@
 // Similar with Axiocam20xTwain32
 
-#define isCamera208 true
-#define snapImageWidth 2160
-#define snapImageHeight 3840
-
-//#define isCamera208 false
-//#define snapImageWidth 1080
-//#define snapImageHeight 1920
-
 #include "qtgui_test.h"
 #include"global.h"
+#include"..\CommonBase\CommonBase.h"
+#include <mutex> 
 
 #define MAX_BUFFER_SIZE 1024
 unsigned char *yuvImageBuffer;
 unsigned long yuvImageBufferSize = 0;
+std::mutex mtx;
+
 int receiveMessageTime = 0;
+
+CameraInfo receiveCameraInfo;
+
 
 QTGUI_Test* QTGUI_Test::plog_ = NULL;
 QTGUI_Test & QTGUI_Test::getInstance()
@@ -30,16 +29,21 @@ QTGUI_Test::QTGUI_Test(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	if (isCamera208)
+
+	/*GetCameraInfo(&receiveCameraInfo);
+	if (receiveCameraInfo.isCameraType208)
 	{
-		yuvImageBufferSize = snapImageWidth * snapImageHeight * 3 / 2;
+		yuvImageBufferSize = receiveCameraInfo.imageWidth * receiveCameraInfo.imageHeight * 3 / 2;
 	}
 	else
 	{
-		yuvImageBufferSize = snapImageWidth * snapImageHeight;
-	}
+		yuvImageBufferSize = receiveCameraInfo.imageWidth * receiveCameraInfo.imageHeight;
+	}*/
+
 	connect(this, SIGNAL(onDataChanged(int, int)), this, SLOT(updateUi(int,int)));
 	connect(this, SIGNAL(onCameraTypeChanged(bool)), this, SLOT(updateCameraType(bool)));
+	connect(this, SIGNAL(onCameraInfoReceived()), this, SLOT(startImageInfoPipe()));
+
 }
 
 DWORD WINAPI ServerThread(LPVOID lpParameter)
@@ -113,8 +117,6 @@ void SaveYUVImage()
 DWORD WINAPI AcceptCameraInfoThread(LPVOID lpParameter)
 {
 	DWORD	nReadByte = 0, nWriteByte = 0, dwByte = 0;
-	CameraInfo cameraInfo;
-
 	PIPE_INSTRUCT CurPipeInst = *(PIPE_INSTRUCT*)lpParameter;
 	OVERLAPPED OverLapStruct = { 0, 0, 0, 0, CurPipeInst.hEvent };
 	while (true)
@@ -125,7 +127,7 @@ DWORD WINAPI AcceptCameraInfoThread(LPVOID lpParameter)
 			break;
 
 		// 从管道中读取客户端的请求信息
-		if (!ReadFile(CurPipeInst.hPipe, &cameraInfo, sizeof(cameraInfo), &nReadByte, NULL))
+		if (!ReadFile(CurPipeInst.hPipe, &receiveCameraInfo, sizeof(receiveCameraInfo), &nReadByte, NULL))
 		{
 			MessageBox(0, L"读取CameraInfo管道错误！", 0, 0);
 			break;
@@ -133,13 +135,27 @@ DWORD WINAPI AcceptCameraInfoThread(LPVOID lpParameter)
 		else
 		{
 			printf("Receive CameraInfo pipe message from AA.\n");
+			if (receiveCameraInfo.isCameraType208)
+			{
+				yuvImageBufferSize = receiveCameraInfo.imageWidth * receiveCameraInfo.imageHeight * 3 / 2;
+			}
+			else
+			{
+				yuvImageBufferSize = receiveCameraInfo.imageWidth * receiveCameraInfo.imageHeight;
+			}
+			printf("Image height is %d\n", receiveCameraInfo.imageHeight);
+			printf("Image width is %d\n", receiveCameraInfo.imageWidth);
+			printf("Buffer size is %d\n", yuvImageBufferSize);
+
+			QTGUI_Test &pMyDlg = *(QTGUI_Test*)CurPipeInst.guiObject;
+			emit pMyDlg.onCameraTypeChanged(receiveCameraInfo.isCameraType208);
+			emit pMyDlg.onCameraInfoReceived();
+
+			WriteFile(CurPipeInst.hPipe, "Succeed", 8, &nWriteByte, NULL);
+
 		}
 
-		QTGUI_Test &pMyDlg = *(QTGUI_Test*)CurPipeInst.guiObject;
-		emit pMyDlg.onCameraTypeChanged(cameraInfo.isCameraType208);
-
 		DisconnectNamedPipe(CurPipeInst.hPipe);
-		//printf("Already DisconnectNamedPipe.\n");
 	}
 
 	return 0;
@@ -148,6 +164,7 @@ DWORD WINAPI AcceptCameraInfoThread(LPVOID lpParameter)
 DWORD WINAPI AcceptImageThread(LPVOID lpParameter)
 {
 	DWORD	nReadByte = 0, nWriteByte = 0, dwByte = 0;
+
 	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
 	memset(yuvImageBuffer, 0, yuvImageBufferSize);
 
@@ -155,7 +172,6 @@ DWORD WINAPI AcceptImageThread(LPVOID lpParameter)
 	OVERLAPPED OverLapStruct = { 0, 0, 0, 0, CurPipeInst.hEvent };
 	while (true)
 	{
-
 		ConnectNamedPipe(CurPipeInst.hPipe, &OverLapStruct);
 		WaitForSingleObject(CurPipeInst.hEvent, INFINITE);
 		if (!GetOverlappedResult(CurPipeInst.hPipe, &OverLapStruct, &dwByte, true))
@@ -169,15 +185,15 @@ DWORD WINAPI AcceptImageThread(LPVOID lpParameter)
 		}
 		else
 		{
-			printf("Receive message from client %d times.\n", receiveMessageTime);
+			//printf("Receive message from client %d times.\n", receiveMessageTime);
 			printf("Receive ImageInfo pipe message from AA.\n");
+			printf("yuvImageBufferSize is %d.\n", yuvImageBufferSize);
 
 			SaveYUVImage();
 			++receiveMessageTime;
 		}
 
 		DisconnectNamedPipe(CurPipeInst.hPipe);
-		//printf("Already DisconnectNamedPipe.\n");
 	}
 
 	return 0;
@@ -244,6 +260,19 @@ void QTGUI_Test::updateUi(int a, int b)
 	ui.c_text->repaint();
 }
 
+void QTGUI_Test::startImageInfoPipe()
+{
+	if (!StartImagePipe())
+	{
+		MessageBox(0, L"Create ImageInfo pipe failed！", 0, 0);
+		return;
+	}
+	else
+	{
+		printf("Create ImageInfo pipe succeed！\n");
+	}
+}
+
 void QTGUI_Test::updateCameraType(bool is208)
 {
 	if (is208)
@@ -287,16 +316,6 @@ void QTGUI_Test::on_start_button_clicked()
 
 void QTGUI_Test::on_start_receive_image_button_clicked()
 {
-	if (!StartImagePipe())
-	{
-		MessageBox(0, L"Create ImageInfo pipe failed！", 0, 0);
-		return;
-	}
-	else
-	{
-		printf("Create ImageInfo pipe succeed！\n");
-	}
-
 	if (!StartCameraInfoPipe())
 	{
 		MessageBox(0, L"Create CameraInfo pipe failed！", 0, 0);

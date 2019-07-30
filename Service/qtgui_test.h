@@ -14,13 +14,6 @@ typedef struct
 	HANDLE  guiObject;
 } PIPE_INSTRUCT;
 
-typedef struct 
-{
-	//unsigned char *	yuvImageBuffer;
-	//unsigned long imageBuffersize;
-	bool isCameraType208;
-} CameraInfo;
-
 class QTGUI_Test : public QMainWindow
 {
 	Q_OBJECT
@@ -52,7 +45,7 @@ signals:
 	//数据发生改变之后发送此信号
 	void onDataChanged(int a, int b);
 	void onCameraTypeChanged(bool is208);
-
+	void onCameraInfoReceived();
 
 private slots:
 	void on_start_button_clicked();
@@ -60,7 +53,7 @@ private slots:
 	void on_stop_button_clicked();
 	void updateUi(int a, int b);
 	void updateCameraType(bool is208);
-
+	void startImageInfoPipe();
 
 };
 

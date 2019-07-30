@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ImageProcessing.h"
+#include"..\CommonBase\CommonBase.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,9 +20,9 @@ unsigned char* yuvImageBuffer = NULL;
 unsigned long yuvImageBufferSize = 0;
 CameraInfo cameraInfo;
 
-#define isCamera208 true
-#define snapImageWidth 2160
-#define snapImageHeight 3840
+//#define isCamera208 true
+//#define snapImageWidth 2160
+//#define snapImageHeight 3840
 
 //#define isCamera208 false
 //#define snapImageWidth 1080
@@ -204,7 +205,7 @@ void SendLocalImageBackToApplication_208_4k(string files)
 	ImageProcessing imageProcess;
 	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
 	memset(yuvImageBuffer, 0, yuvImageBufferSize);
-	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files, snapImageWidth, snapImageHeight, yuvImageBuffer, true);
+	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(files, cameraInfo.imageWidth, cameraInfo.imageHeight, yuvImageBuffer, true);
 	if (!result)
 	{
 		printf("208 4k CreateImagebufferFromLocalYUVImage failed!");
@@ -217,7 +218,7 @@ void SendLocalImageBackToApplication_202_1080p(string file)
 	ImageProcessing imageProcess;
 	yuvImageBuffer = (unsigned char *)malloc(yuvImageBufferSize);
 	memset(yuvImageBuffer, 0, yuvImageBufferSize);
-	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(file, snapImageWidth, snapImageHeight, yuvImageBuffer, false);
+	bool result = imageProcess.CreateImagebufferFromLocalYUVImage(file, cameraInfo.imageWidth, cameraInfo.imageHeight, yuvImageBuffer, false);
 	if (!result)
 	{
 		printf("202 1080p CreateImagebufferFromLocalYUVImage failed!");
@@ -227,7 +228,7 @@ void SendLocalImageBackToApplication_202_1080p(string file)
 
 void ReadYUVImageFileFromLocal()
 {
-	if (isCamera208)
+	if (cameraInfo.isCameraType208)
 	{
 		string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\208_4K_YUV\\0";
 		SendLocalImageBackToApplication_208_4k(fileName);
@@ -237,8 +238,6 @@ void ReadYUVImageFileFromLocal()
 		string fileName = "C:\\Users\\zcalwang\\Desktop\\CameraTestFolder\\TWAIN\\202_1080p_YUV\\0";
 		SendLocalImageBackToApplication_202_1080p(fileName);
 	}
-
-	cameraInfo.isCameraType208 = isCamera208;
 }
 
 bool SendImageToTWAIN()
@@ -269,7 +268,8 @@ bool SendCameraInfoToTWAIN()
 		return false;
 	}
 
-	DWORD nWriteByte;
+	DWORD nWriteByte, nReadByte;
+	/* For multiple time Test
 	if (cameraInfo.isCameraType208)
 	{
 		cameraInfo.isCameraType208 = false;
@@ -277,26 +277,35 @@ bool SendCameraInfoToTWAIN()
 	else
 	{
 		cameraInfo.isCameraType208 = true;
-	}
-
+	}*/
 
 	WriteFile(hPipe, &cameraInfo, sizeof(cameraInfo), &nWriteByte, NULL);
 
+	char szBuf[10] = { 0 };
+	ReadFile(hPipe, szBuf, 8, &nReadByte, NULL);
+	// 把返回信息格式化为整数
+	printf("Get value from Server, and value is: %s", szBuf);
+
 	CloseHandle(hPipe);
+
+	Sleep(100);
+	if (!SendImageToTWAIN())
+	{
+		MessageBox(0, L"打开ImageInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+		return false;
+	}
+
 	return true;
 }
 
 void SendAllInfoTWAIN()
 {
-	if (!SendImageToTWAIN())
-	{
-		MessageBox(0, L"打开ImageInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
-		return;
-	}
 	if (!SendCameraInfoToTWAIN())
 	{
 		MessageBox(0, L"打开CameraInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
 	}
+
+	
 }
 
 void Submit(int nFirst, int nSecond)
@@ -330,13 +339,14 @@ void Submit(int nFirst, int nSecond)
 
 void Initialize()
 {
-	if (isCamera208)
+	GetCameraInfo(&cameraInfo);
+	if (cameraInfo.isCameraType208)
 	{
-		yuvImageBufferSize = snapImageWidth * snapImageHeight * 3 / 2;
+		yuvImageBufferSize = cameraInfo.imageWidth * cameraInfo.imageHeight * 3 / 2;
 	}
 	else
 	{
-		yuvImageBufferSize = snapImageWidth * snapImageHeight;
+		yuvImageBufferSize = cameraInfo.imageWidth * cameraInfo.imageHeight;
 	}
 
 	ReadYUVImageFileFromLocal();
@@ -346,12 +356,12 @@ int main()
 {
 	Initialize();
 
-	for(int i = 0; i < 10; i++)
-	{
-		printf("This is %d times. \n", i);
+	//for(int i = 0; i < 10; i++)
+	//{
+	//	printf("This is %d times. \n", i);
 		SendAllInfoTWAIN();
-		Sleep(20);
-	}
+		//Sleep(20);
+	//}
 
 	int i;
 	cin >> i;
