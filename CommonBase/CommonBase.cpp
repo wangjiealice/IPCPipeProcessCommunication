@@ -15,5 +15,5 @@ bool API_DECL GetCameraInfo(CameraInfo * cameraInfo)
 	cameraInfo->imageHeight = 1080;
 
 #endif // Camera208
-	return false;
+	return true;
 }

@@ -283,17 +283,9 @@ bool SendCameraInfoToTWAIN()
 
 	char szBuf[10] = { 0 };
 	ReadFile(hPipe, szBuf, 8, &nReadByte, NULL);
-	// 把返回信息格式化为整数
-	printf("Get value from Server, and value is: %s", szBuf);
+	printf("Get value from Server, and value is: %s./d", szBuf);
 
 	CloseHandle(hPipe);
-
-	Sleep(100);
-	if (!SendImageToTWAIN())
-	{
-		MessageBox(0, L"打开ImageInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
-		return false;
-	}
 
 	return true;
 }
@@ -303,9 +295,14 @@ void SendAllInfoTWAIN()
 	if (!SendCameraInfoToTWAIN())
 	{
 		MessageBox(0, L"打开CameraInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+		return;
 	}
 
-	
+	Sleep(100);
+	if (!SendImageToTWAIN())
+	{
+		MessageBox(0, L"打开ImageInfo管道失败，服务器尚未启动,或者客户端数量过多", 0, 0);
+	}
 }
 
 void Submit(int nFirst, int nSecond)
@@ -352,6 +349,11 @@ void Initialize()
 	ReadYUVImageFileFromLocal();
 }
 
+inline void winerr(void)
+{
+	cout << "win error:" << GetLastError() << endl;
+}
+
 int main()
 {
 	Initialize();
@@ -359,24 +361,19 @@ int main()
 	//for(int i = 0; i < 10; i++)
 	//{
 	//	printf("This is %d times. \n", i);
-		SendAllInfoTWAIN();
-		//Sleep(20);
+	SendAllInfoTWAIN();
+	//Sleep(20);
 	//}
 
 	int i;
 	cin >> i;
 
 	/*for(int i = 0; i < 100; i++)
-	{ 
-		printf("This is %d times. \n", i);
-		Sleep(3000);
-		RunExe();
+	{
+	printf("This is %d times. \n", i);
+	Sleep(3000);
+	RunExe();
 	}*/
 
-    return 0;
-}
-
-inline void winerr(void)
-{
-	cout << "win error:" << GetLastError() << endl;
+	return 0;
 }
