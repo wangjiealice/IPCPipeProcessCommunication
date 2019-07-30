@@ -3,8 +3,6 @@ IPC by Pipe way.
 QT server and cmd client.
 
 Steps:
-First start QT server.
+First start QT server. Click "启动获取图像服务器" button. 
 Then start cmd client.
-
-Exist work:
-Values can be sent to server, but the GUI does not update.
+Image will save to local path.
