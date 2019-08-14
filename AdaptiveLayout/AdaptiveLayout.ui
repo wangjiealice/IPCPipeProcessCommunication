@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdaptiveLayoutClass</class>
+ <widget class="QMainWindow" name="AdaptiveLayoutClass">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1117</width>
+    <height>814</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Frutiger Next W1G 8px</family>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>AdaptiveLayout</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+
+}
+
+QMainWindow::Menubar{
+background-color:red;
+}
+
+QWidget{
+background:#262E36;
+color:#D1D9E5;
+font:ZEISS Frutiger Next W1G 8px;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>10</y>
+      <width>351</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>100</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox{
+border:1px solid #828D9E;
+border-radius: 3px;
+margin-top:10px;
+}
+
+QGroupBox:title{
+subcontrol-origin: margin;
+}
+</string>
+    </property>
+    <property name="title">
+     <string>    GroupBox    </string>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>490</y>
+      <width>351</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTabWidget::pane{
+	border:none;
+}
+QTabBar::tab{
+	background:#353D45;
+	color:#353D45;
+    min-width:52ex;
+	min-height:6ex;
+}
+QTabBar::tab:selected{
+border:1px solid #353D45;
+	background:#353D45;
+	color:#FFFFFF;
+}
+QTabBar::tab:!selected{
+	border-color: #1A2329;
+	background:#1A2329;
+	color:#828D9E;
+
+}</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+    background: #353D45;
+}</string>
+     </property>
+     <attribute name="title">
+      <string>Send Files To TWAIN</string>
+     </attribute>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>95</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>RadioButton</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <property name="styleSheet">
+      <string notr="true">QWidget {
+    background: #353D45;
+}</string>
+     </property>
+     <attribute name="title">
+      <string>Save In Shard Folder</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QCheckBox" name="autoExposureCheckBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>90</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Unchecked.png&quot;);
+}
+ 
+QCheckBox::indicator:checked {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Checked.png&quot;);
+}
+
+QCheckBox::indicator:disabled {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Disabled.png&quot;);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Auto Exposure</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>370</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel{
+color:#D1D9E5;
+}
+
+QLabel:disabled {
+color:rgba(209,217,229,125);
+}</string>
+    </property>
+    <property name="text">
+     <string>Sweetfadsfmkasdfkdsalfdsa</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>200</y>
+      <width>160</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSlider::add-page:Horizontal
+{     
+    background-color: #07090D;/*Black*/
+    height:2px;
+}
+QSlider::sub-page:Horizontal 
+{
+    background-color:#D1D9E5;/*Gray*/
+    height:2px;
+}
+QSlider::groove:Horizontal 
+{
+    background:transparent;
+    height:2px;
+}
+QSlider::handle:Horizontal 
+{
+    height:16;
+    width:18;
+    background-image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QSlider_Block.png&quot;);
+    margin: -8 0px; 
+}
+
+QSlider::add-page:Horizontal:disabled 
+{     
+    background-color: rgba(7,9,13,125);
+    height:2px;
+}
+QSlider::sub-page:Horizontal:disabled 
+{
+    background-color:#555E6B;/*Gray*/
+    height:2px;
+}
+
+QSlider::handle:Horizontal:disabled
+{
+    height:16;
+    width:18;
+    background-image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QSlider_BlockDisabled.png&quot;);
+    margin: -8 0px; 
+}
+</string>
+    </property>
+    <property name="value">
+     <number>50</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="brightnessSpinBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>150</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSpinBox {
+     background-color: transparent;
+     border-style: none;
+     border-bottom-style:solid ;
+     border-color: #080A0D;
+     border-width: 1px;
+    color:#D1D9E5;
+    height:32px
+ } 
+
+QSpinBox:disabled {
+     background-color: transparent;
+     border-style: none;
+     border-bottom-style:solid ;
+     border-color: #07090D;
+     border-width: 1px;
+    color:rgba(209,217,229,125);
+    height:32px
+ } </string>
+    </property>
+    <property name="buttonSymbols">
+     <enum>QAbstractSpinBox::NoButtons</enum>
+    </property>
+    <property name="minimum">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="singleStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>10</number>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_2">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>440</y>
+      <width>95</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton:disabled { 
+    color:rgba(209,217,229,125);
+}
+QRadioButton::indicator { 
+    width: 16px;
+    height: 16px;
+}
+/*单选框未选中样式*/
+QRadioButton::indicator::unchecked { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_UncheckedEnabled.png&quot;);
+}
+/*单选框选中样式*/
+QRadioButton::indicator::checked { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_CheckedEnabled.png&quot;);
+}
+
+QRadioButton::indicator::disabled { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_UncheckedDisabled.png&quot;);
+}</string>
+    </property>
+    <property name="text">
+     <string>RadioButton</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_3">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>440</y>
+      <width>95</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QRadioButton:disabled { 
+    color:rgba(209,217,229,125);
+}
+QRadioButton::indicator { 
+    width: 16px;
+    height: 16px;
+}
+/*单选框未选中样式*/
+QRadioButton::indicator::unchecked { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_UncheckedEnabled.png&quot;);
+}
+/*单选框选中样式*/
+QRadioButton::indicator::checked { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_CheckedEnabled.png&quot;);
+}
+
+QRadioButton::indicator::disabled { 
+    image: url(&quot;C:/Users/Public/TWAIN/Resources/QRadioButton_UncheckedDisabled.png&quot;);
+}</string>
+    </property>
+    <property name="text">
+     <string>RadioButton</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="brightnessSpinBox_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>150</y>
+      <width>81</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QSpinBox {
+     background-color: transparent;
+     border-style: none;
+     border-bottom-style:solid ;
+     border-color: #080A0D;
+     border-width: 1px;
+    color:#D1D9E5;
+    height:32px
+ } 
+
+QSpinBox:disabled {
+     background-color: transparent;
+     border-style: none;
+     border-bottom-style:solid ;
+     border-color: #07090D;
+     border-width: 1px;
+    color:rgba(209,217,229,125);
+    height:32px
+ } </string>
+    </property>
+    <property name="buttonSymbols">
+     <enum>QAbstractSpinBox::NoButtons</enum>
+    </property>
+    <property name="minimum">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="singleStep">
+     <number>1</number>
+    </property>
+    <property name="value">
+     <number>10</number>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="autoExposureCheckBox_2">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>90</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QCheckBox::indicator:unchecked {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Unchecked.png&quot;);
+}
+ 
+QCheckBox::indicator:checked {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Checked.png&quot;);
+}
+
+QCheckBox::indicator:disabled {
+    image: url(&quot;C:/Users/zcalwang/Desktop/CameraTestFolder/TWAIN/ControlImage/QCheckBox_Disabled.png&quot;);
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Auto Exposure</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>260</y>
+      <width>431</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QListView {
+    show-decoration-selected: 1; /* make the selection span the entire width of the view */
+border:1px solid #828D9E;
+border-radius: 3px;
+}
+
+QListView::item:alternate {
+    background: #EEEEEE;
+}
+
+QListView::item:selected {
+     border-bottom:2px solid #828D9E;
+     border-right:2px solid #828D9E;
+     border-left:2px solid #828D9E;
+     border-top:2px solid #2E7AF5;
+}
+
+/*  整体style */
+QScrollBar:horizontal {
+
+    height: 12px;
+    margin: 0px 1px 0 1px;
+}
+QScrollBar::handle:horizontal {
+    background:#828D9E;
+    min-width: 20px;
+ border-radius: 6px;
+}
+QScrollBar::add-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+
+QScrollBar::add-page:horizontal {
+    background-color: transparent;
+}
+QScrollBar::sub-page:horizontal {
+    background-color: transparent;
+}
+</string>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="sizeAdjustPolicy">
+     <enum>QAbstractScrollArea::AdjustToContents</enum>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>100</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="viewMode">
+     <enum>QListView::IconMode</enum>
+    </property>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_0.jpg</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_0.jpg</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/3840_2160.bmp</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/3840_2160.bmp</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_0.jpg</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_0.jpg</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_1.jpg</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/Axiocam_1_1.jpg</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/camera.jpg</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/camera.jpg</iconset>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/3840_2160.bmp</normaloff>../../../Users/zcalwang/Desktop/CameraTestFolder/AxiocamApplication/3840_2160.bmp</iconset>
+     </property>
+    </item>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>160</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+background-color: #828D9E;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>160</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+background-color: rgba(209,217,229,125);
+}
+
+QFrame::hover{
+background-color: #828D9E;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="deleteSelectedImagesButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>20</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>Frutiger Next W1G 8px</family>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	background:#1A2329;
+	color:#D1D9E5;
+	border: 1px solid #080A0D;
+border-radius:3px;
+}
+QPushButton:pressed{
+	background:#555E6B;
+	color:#D1D9E5;
+	border-color: #080A0D;
+}</string>
+    </property>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="horizontalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>260</y>
+      <width>261</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QScrollBar:horizontal {
+
+    height: 12px;
+    margin: 0px 1px 0 1px;
+}
+QScrollBar::handle:horizontal {
+    background:#828D9E;
+    min-width: 20px;
+ border-radius: 6px;
+}
+QScrollBar::add-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: right;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+    background: transparent;
+    width: 1px;
+    subcontrol-position: left;
+    subcontrol-origin: margin;
+}
+
+
+QScrollBar::add-page:horizontal {
+    background-color: transparent;
+}
+QScrollBar::sub-page:horizontal {
+    background-color: transparent;
+}
+</string>
+    </property>
+    <property name="value">
+     <number>50</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1117</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="AdaptiveLayout.qrc"/>
+ </resources>
+ <connections/>
+</ui>

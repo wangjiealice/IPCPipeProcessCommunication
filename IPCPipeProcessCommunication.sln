@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QT_Server", "Service\QTGUI_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonBase", "CommonBase\CommonBase.vcxproj", "{45CC0F88-8559-46E9-9E2A-1D5477904462}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdaptiveLayout", "AdaptiveLayout\AdaptiveLayout.vcxproj", "{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -53,6 +55,14 @@ Global
 		{45CC0F88-8559-46E9-9E2A-1D5477904462}.Release|x64.Build.0 = Release|x64
 		{45CC0F88-8559-46E9-9E2A-1D5477904462}.Release|x86.ActiveCfg = Release|Win32
 		{45CC0F88-8559-46E9-9E2A-1D5477904462}.Release|x86.Build.0 = Release|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Debug|ARM.ActiveCfg = Debug|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Debug|x64.ActiveCfg = Debug|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Debug|x86.ActiveCfg = Debug|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Debug|x86.Build.0 = Debug|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|ARM.ActiveCfg = Release|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x64.ActiveCfg = Release|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x86.ActiveCfg = Release|Win32
+		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

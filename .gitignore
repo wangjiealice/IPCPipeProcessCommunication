@@ -6,3 +6,7 @@
 /Client/Debug/
 /ipch/
 /CommonBase/Debug
+/AdaptiveLayout/Debug
+/AdaptiveLayout/GeneratedFiles/Debug
+/AdaptiveLayout/GeneratedFiles
+/Win32/Debug
