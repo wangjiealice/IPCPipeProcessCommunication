@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include "ui_MessageBoxForm.h"
+#include "ui_MessageBoxInfo.h"
 #include "messagebox.h"
 
 class MessageBoxInfo : public MessageBox
@@ -13,7 +13,5 @@ public:
 	void SetMessageBoxContent(QString content);
 
 private:
-	Ui::MessageBox ui;
-	bool mouse_press;
-	QPoint move_point;
+	Ui::MessageBoxInfo ui;
 };

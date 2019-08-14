@@ -1,11 +1,10 @@
-#include"messagebox_info.h"
+#include"MessageBoxInfo.h"
 
 MessageBoxInfo::MessageBoxInfo(QWidget *parent)
 	: MessageBox(parent)
 {
 	ui.setupUi(this);
 	QObject::connect(ui.OKButton, SIGNAL(clicked()), this, SLOT(okOperate()));
-	//QObject::connect(ui.messageBoxContent, SIGNAL(clicked()), this, SLOT(cancelOperate()));
 }
 
 void MessageBoxInfo::SetMessageBoxContent(QString content)

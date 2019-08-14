@@ -5,7 +5,6 @@
 #include <QWidget>
 #include <QLabel>
 #include <QMouseEvent>
-//#include "ui_MessageBoxForm.h"
 
  class MessageBox : public QDialog
 {

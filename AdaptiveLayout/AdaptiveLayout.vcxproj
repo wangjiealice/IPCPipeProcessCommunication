@@ -116,7 +116,8 @@
     <ClCompile Include="AdaptiveLayout.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messagebox.cpp" />
-    <ClCompile Include="messagebox_info.cpp" />
+    <ClCompile Include="MessageBoxError.cpp" />
+    <ClCompile Include="MessageBoxInfo.cpp" />
     <ClCompile Include="msg_box.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="AdaptiveLayout.ui" />
-    <QtUic Include="MessageBoxForm.ui" />
+    <QtUic Include="MessageBoxError.ui">
+      <SubType>Designer</SubType>
+    </QtUic>
+    <QtUic Include="MessageBoxInfo.ui">
+      <SubType>Designer</SubType>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="AdaptiveLayout.qrc" />
@@ -142,7 +148,13 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="messagebox_info.h">
+    <QtMoc Include="MessageBoxInfo.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="MessageBoxError.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets;C:\Program Files (x86)\Visual Leak Detector\include</IncludePath>
     </QtMoc>

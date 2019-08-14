@@ -42,7 +42,10 @@
     <ClCompile Include="messagebox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="messagebox_info.cpp">
+    <ClCompile Include="MessageBoxError.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageBoxInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,10 +56,13 @@
     <QtMoc Include="msg_box.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="messagebox_info.h">
+    <QtMoc Include="messagebox.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="messagebox.h">
+    <QtMoc Include="MessageBoxInfo.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MessageBoxError.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -64,7 +70,10 @@
     <QtUic Include="AdaptiveLayout.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="MessageBoxForm.ui">
+    <QtUic Include="MessageBoxError.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="MessageBoxInfo.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
