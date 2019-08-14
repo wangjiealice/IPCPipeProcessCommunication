@@ -3,7 +3,7 @@
 #include "messagebox.h"
 #include "MessageBoxInfo.h"
 #include "MessageBoxError.h"
-
+#include "MessageBoxAsk.h"
 
 #include <QMessageBox>
 
@@ -32,5 +32,14 @@ void AdaptiveLayout::on_deleteSelectedImagesButton_clicked()
 	//msg_box1->SetMessageBoxContent("111111111111111111112222222222222222222222222222223333333333333333333333333333444444444444444444444");
 	//msg_box1->show();
 
+	MessageBoxAsk *msg_box1 = new MessageBoxAsk();
+	msg_box1->SetMessageBoxContent("111111111111111111112222222222222222222222222222223333333333333333333333333333444444444444444444444");
+	int result = msg_box1->exec();
+	printf("Result is %d\n",result);
 
+
+	MessageBoxAsk *msg_box2 = new MessageBoxAsk();
+	msg_box2->SetMessageBoxContent("111111111111111111112222222222222222222222222222223333333333333333333333333333444444444444444444444");
+	int result2 = msg_box2->exec();
+	printf("Result is %d\n", result2);
 }
