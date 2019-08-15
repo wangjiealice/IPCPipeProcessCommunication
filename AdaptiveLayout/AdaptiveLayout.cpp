@@ -20,9 +20,11 @@ void AdaptiveLayout::on_deleteSelectedImagesButton_clicked()
 	msg_box2->setInfo(QString("testdialog"), QString("hello"), QPixmap(":/icon/attention"), true, true);
 	msg_box2->exec();*/
 
-	//QMessageBox message(QMessageBox::Warning, "Error", "hellohello", QMessageBox::Ok);
-	//message.setStyleSheet("QMessageBox {background-color: #07090D;} QMessageBox QLabel {color: #828D9E;}");
-	//message.exec();
+	//QMessageBox message1(QMessageBox::Warning, "Error", "1", QMessageBox::Ok);
+	//message1.exec();
+
+	//QMessageBox message2(QMessageBox::Warning, "Error", "222222222222222222", QMessageBox::Ok);
+	//message2.exec();
 
 	/*MessageBoxInfo *msg_box1 = new MessageBoxInfo();
 	msg_box1->SetMessageBoxContent("1111111111111111111112222222222222222222222222233333333333333333333333333333444444444444444444");
@@ -33,13 +35,13 @@ void AdaptiveLayout::on_deleteSelectedImagesButton_clicked()
 	//msg_box1->show();
 
 	MessageBoxAsk *msg_box1 = new MessageBoxAsk();
-	msg_box1->SetMessageBoxContent("111111111111111111112222222222222222222222222222223333333333333333333333333333444444444444444444444");
+	msg_box1->SetMessageBoxContent("111");
 	int result = msg_box1->exec();
 	printf("Result is %d\n",result);
 
 
 	MessageBoxAsk *msg_box2 = new MessageBoxAsk();
-	msg_box2->SetMessageBoxContent("111111111111111111112222222222222222222222222222223333333333333333333333333333444444444444444444444");
+	msg_box2->SetMessageBoxContent("222");
 	int result2 = msg_box2->exec();
 	printf("Result is %d\n", result2);
 }
