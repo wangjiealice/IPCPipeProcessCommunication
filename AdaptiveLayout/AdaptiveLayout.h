@@ -15,6 +15,5 @@ private:
 
 	private slots:
 	void on_deleteSelectedImagesButton_clicked();
-
-
+	void on_fileButton_clicked();
 };

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>533</width>
-    <height>407</height>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -82,6 +82,9 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -110,6 +113,9 @@
       <family>Segoe UI</family>
       <pointsize>14</pointsize>
      </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="styleSheet">
      <string notr="true">
@@ -219,9 +225,11 @@ color:#828D9E;
       <pointsize>14</pointsize>
      </font>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
     <property name="styleSheet">
-     <string notr="true">
-            QPushButton{
+     <string notr="true">QPushButton{
             color:#353D45;
             border-top:1px solid #DDE3ED;
 border-right:1px solid #DDE3ED;
