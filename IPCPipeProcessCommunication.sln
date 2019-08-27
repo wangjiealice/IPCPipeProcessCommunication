@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonBase", "CommonBase\Co
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AdaptiveLayout", "AdaptiveLayout\AdaptiveLayout.vcxproj", "{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AnnotationOnImage", "AnnotationOnImage\AnnotationOnImage.vcxproj", "{28F2E52C-0D96-45BD-AFF1-ABF293A15350}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -63,6 +65,14 @@ Global
 		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x64.ActiveCfg = Release|Win32
 		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x86.ActiveCfg = Release|Win32
 		{7D09FD55-6FD7-43B6-AFA6-F4440305EFAB}.Release|x86.Build.0 = Release|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Debug|ARM.ActiveCfg = Debug|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Debug|x64.ActiveCfg = Debug|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Debug|x86.ActiveCfg = Debug|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Debug|x86.Build.0 = Debug|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Release|ARM.ActiveCfg = Release|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Release|x64.ActiveCfg = Release|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Release|x86.ActiveCfg = Release|Win32
+		{28F2E52C-0D96-45BD-AFF1-ABF293A15350}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AnnotationOnImageClass</class>
+ <widget class="QMainWindow" name="AnnotationOnImageClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>689</width>
+    <height>528</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>AnnotationOnImage</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="AnnotationArea" name="View">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>621</width>
+      <height>361</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labViewSize">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>400</y>
+      <width>601</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Graphics View coordinate，left top is （0,0），width=，height=</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="LabSceneRect">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>430</y>
+      <width>601</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>QGraphicsView::sceneRect=()</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="changeLinePositionButton">
+    <property name="geometry">
+     <rect>
+      <x>502</x>
+      <y>390</y>
+      <width>141</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ChangeLinePosition</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>689</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>AnnotationArea</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">AnnotationArea.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="AnnotationOnImage.qrc"/>
+ </resources>
+ <connections/>
+</ui>
